@@ -66,22 +66,9 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-buildozer-local-
     
-    - name: Accept Android SDK licenses
-      run: |
-        yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses || true
-        yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "platform-tools" "platforms;android-31" "build-tools;30.0.3" || true
-    
     - name: Build with Buildozer
       run: |
-        buildozer android debug
+        # Run buildozer in non-interactive mode
+        yes | buildozer android debug || buildozer android debug
       env:
-        ANDROID_SDK_ROOT: ${{ env.ANDROID_HOME }}
-        ANDROID_HOME: ${{ env.ANDROID_HOME }}
-    
-    - name: Upload APK
-      uses: actions/upload-artifact@v4
-      if: success()
-      with:
-        name: ghost-catching-game-debug
-        path: bin/*.apk
-        retention-days: 30
+        BUILDOZER_WARN_ON_ROOT: 0
