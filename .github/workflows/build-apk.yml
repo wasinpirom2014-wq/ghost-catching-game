@@ -37,19 +37,7 @@ jobs:
           cmake \
           libffi-dev \
           libssl-dev \
-          python3-pip \
-          build-essential \
-          libltdl-dev \
-          libreadline-dev \
-          libsqlite3-dev \
-          wget \
-          curl \
-          llvm \
-          xz-utils \
-          tk-dev \
-          libxml2-dev \
-          libxmlsec1-dev \
-          liblzma-dev
+          python3-pip
     
     - name: Set JAVA_HOME
       run: |
@@ -60,36 +48,40 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install buildozer cython==0.29.33
-        pip install -r requirements.txt || echo "requirements.txt not found, skipping..."
+        pip install -r requirements.txt
     
     - name: Cache Buildozer global directory
       uses: actions/cache@v4
       with:
         path: ~/.buildozer
-        key: ${{ runner.os }}-buildozer-${{ hashFiles('buildozer.spec') }}
+        key: ${{ runner.os }}-buildozer-global-${{ hashFiles('buildozer.spec') }}
         restore-keys: |
-          ${{ runner.os }}-buildozer-
+          ${{ runner.os }}-buildozer-global-
     
-    - name: Cache Buildozer build directory
+    - name: Cache Buildozer local directory
       uses: actions/cache@v4
       with:
         path: .buildozer
-        key: ${{ runner.os }}-buildozer-build-${{ hashFiles('buildozer.spec') }}
+        key: ${{ runner.os }}-buildozer-local-${{ hashFiles('buildozer.spec') }}
         restore-keys: |
-          ${{ runner.os }}-buildozer-build-
+          ${{ runner.os }}-buildozer-local-
+    
+    - name: Accept Android SDK licenses
+      run: |
+        yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses || true
+        yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "platform-tools" "platforms;android-31" "build-tools;30.0.3" || true
     
     - name: Build with Buildozer
       run: |
         buildozer android debug
+      env:
+        ANDROID_SDK_ROOT: ${{ env.ANDROID_HOME }}
+        ANDROID_HOME: ${{ env.ANDROID_HOME }}
     
-    - name: Upload APK artifact
+    - name: Upload APK
       uses: actions/upload-artifact@v4
+      if: success()
       with:
         name: ghost-catching-game-debug
         path: bin/*.apk
-    
-    - name: Get APK info
-      run: |
-        ls -lh bin/
-        echo "APK built successfully!"
-        echo "Download the APK from the Artifacts section above."
+        retention-days: 30
