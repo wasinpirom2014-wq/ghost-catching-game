@@ -27,12 +27,8 @@ source.exclude_dirs = tests,bin,build,dist
 # (list) List of exclusions using pattern matching
 source.exclude_patterns = license,images/*/*.py
 
-# (str) Application versioning (method 1)
+# (str) Application versioning
 version = 1.0.0
-
-# (str) Application versioning (method 2)
-version.regex = __version__ = ['"](.*)['"]
-version.filename = %(source.dir)s/main.py
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
@@ -86,29 +82,11 @@ android.copy_libs = 1
 # (bool) enables Android auto backup feature (Android API >=23)
 android.allow_backup = True
 
-# (str) XML file for custom backup scheme, see the documentation
-android.backup_scheme = 
-
 # (list) Pattern to whitelist for the whole project
 android.whitelist = lib-dynload/termios.so
 
-# (str) Path to a custom whitelist file
-android.whitelist_src = 
-
-# (str) Path to a custom blacklist file
-android.blacklist_src = 
-
-# (list) List of Java .jar files to add to the libs so that pydroid can access
-# their classes. Don't add jars that you do not need, since extra jars can slow
-# down the build process. Allows wildcards matching, for example:
-# OUYA-ODK/libs/*.jar
-android.add_src = 
-
 # (int) overrides automatic versionCode (used in build.gradle)
-android.version_code = 1
-
-# (str) overrides automatic versionName (used in build.gradle)
-android.version_name = 1.0.0
+android.numeric_version = 1
 
 [buildozer]
 
