@@ -74,7 +74,7 @@ android.ndk = 25b
 # (bool) Use legacy toolchain
 android.use_legacy_toolchain = False
 
-# (bool) Enable AndroidX support
+# (str) Gradle dependencies (Google Play Services for AdMob)
 android.gradle_dependencies = com.google.android.gms:play-services-ads:20.6.0
 
 # (str) Android logcat filters to use
@@ -83,17 +83,11 @@ android.logcat_filters = *:S python:D
 # (bool) Copy library instead of making a libpymodules.so
 android.copy_libs = 1
 
-# (str) The Android arch to build for, choices: armeabi-v7a, arm64-v8a, x86, x86_64
-android.archs = arm64-v8a
-
 # (bool) enables Android auto backup feature (Android API >=23)
 android.allow_backup = True
 
 # (str) XML file for custom backup scheme, see the documentation
 android.backup_scheme = 
-
-# (str) Gradle dependencies
-android.gradle_dependencies = 
 
 # (list) Pattern to whitelist for the whole project
 android.whitelist = lib-dynload/termios.so
@@ -110,29 +104,11 @@ android.blacklist_src =
 # OUYA-ODK/libs/*.jar
 android.add_src = 
 
-# (list) Pattern to whitelist for the whole project
-#android.whitelist = lib-dynload/termios.so
-
-# (bool) Copy library instead of making a libpymodules.so
-android.copy_libs = 1
-
-# (str) The Android arch to build for, choices: armeabi-v7a, arm64-v8a, x86, x86_64
-android.archs = arm64-v8a,armeabi-v7a
-
 # (int) overrides automatic versionCode (used in build.gradle)
 android.version_code = 1
 
 # (str) overrides automatic versionName (used in build.gradle)
 android.version_name = 1.0.0
-
-# (str) Android logcat filters to use
-android.logcat_filters = *:S python:D
-
-# (bool) Copy library instead of making a libpymodules.so
-android.copy_libs = 1
-
-# (str) The Android arch to build for, choices: armeabi-v7a, arm64-v8a, x86, x86_64
-android.archs = arm64-v8a
 
 [buildozer]
 
